@@ -80,13 +80,7 @@ class DanmuController(context: Context) : InterDanmuController {
     }
 
     override fun setSpeed(speed: Float) {
-        //IJK内核倍速无法按预期加速，导致弹幕倍速会出现偏移，因此禁用
-        //倍速小于1的情况下，弹幕没有按预期减速，因此禁用
-        if (PlayerInitializer.playerType != PlayerType.TYPE_IJK_PLAYER
-            && speed >= 1f
-        ) {
-            danmuView.setSpeed(speed)
-        }
+        danmuView.setSpeed(speed)
     }
 
     override fun seekTo(timeMs: Long, isPlaying: Boolean) {

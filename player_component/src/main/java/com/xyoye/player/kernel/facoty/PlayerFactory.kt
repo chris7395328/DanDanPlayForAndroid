@@ -4,6 +4,7 @@ import android.content.Context
 import com.xyoye.data_component.enums.PlayerType
 import com.xyoye.player.kernel.impl.exo.ExoPlayerFactory
 import com.xyoye.player.kernel.impl.ijk.IjkPlayerFactory
+import com.xyoye.player.kernel.impl.mpv.MpvPlayerFactory
 import com.xyoye.player.kernel.impl.vlc.VlcPlayerFactory
 import com.xyoye.player.kernel.inter.AbstractVideoPlayer
 
@@ -19,6 +20,7 @@ abstract class PlayerFactory {
                 PlayerType.TYPE_EXO_PLAYER -> ExoPlayerFactory()
                 PlayerType.TYPE_IJK_PLAYER -> IjkPlayerFactory()
                 PlayerType.TYPE_VLC_PLAYER -> VlcPlayerFactory()
+                PlayerType.TYPE_MPV_PLAYER -> MpvPlayerFactory()
                 else -> IjkPlayerFactory()
             }
         }

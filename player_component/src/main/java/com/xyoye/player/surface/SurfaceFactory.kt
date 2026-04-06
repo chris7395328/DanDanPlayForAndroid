@@ -14,6 +14,13 @@ abstract class SurfaceFactory {
         fun getFactory(playerType: PlayerType, surfaceType: SurfaceType): SurfaceFactory{
             return when{
                 playerType == PlayerType.TYPE_VLC_PLAYER -> VLCViewFactory()
+                playerType == PlayerType.TYPE_MPV_PLAYER -> {
+                    if (surfaceType == SurfaceType.VIEW_TEXTURE) {
+                        TextureViewFactory()
+                    } else {
+                        SurfaceViewFactory()
+                    }
+                }
                 surfaceType == SurfaceType.VIEW_SURFACE -> SurfaceViewFactory()
                 surfaceType == SurfaceType.VIEW_TEXTURE -> TextureViewFactory()
                 else -> SurfaceViewFactory()

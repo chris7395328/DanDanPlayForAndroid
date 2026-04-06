@@ -9,7 +9,9 @@ enum class PlayerType(val value: Int) {
 
     TYPE_EXO_PLAYER(2),
 
-    TYPE_VLC_PLAYER(3);
+    TYPE_VLC_PLAYER(3),
+    
+    TYPE_MPV_PLAYER(4);
 
     companion object {
         fun valueOf(value: Int): PlayerType {
@@ -17,6 +19,7 @@ enum class PlayerType(val value: Int) {
                 1 -> TYPE_IJK_PLAYER
                 2 -> TYPE_EXO_PLAYER
                 3 -> TYPE_VLC_PLAYER
+                4 -> TYPE_MPV_PLAYER
                 else -> TYPE_IJK_PLAYER
             }
         }
