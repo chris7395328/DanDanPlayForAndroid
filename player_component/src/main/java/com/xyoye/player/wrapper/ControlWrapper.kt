@@ -84,7 +84,8 @@ class ControlWrapper(
 
     override fun setSpeed(speed: Float) {
         mVideoPlayer.setSpeed(speed)
-        mDanmuController.setSpeed(speed)
+        // 不要同步改变弹幕速度，弹幕基于时间戳会自动跟随视频速度
+        // mDanmuController.setSpeed(speed)
     }
 
     override fun getSpeed() = mVideoPlayer.getSpeed()
