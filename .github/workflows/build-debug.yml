@@ -22,27 +22,43 @@ jobs:
           java-version: 11
           distribution: adopt
 
-      # 3.配置构建类型为 debug
+      # 3.创建临时的 debug.properties 文件
+      - name: create temporary keystore config
+        run: |
+          echo "KEY_LOCATION=dandanplay.jks" > gradle/assemble/debug.properties
+          echo "KEYSTORE_PASS=temp1234" >> gradle/assemble/debug.properties
+          echo "ALIAS_NAME=temp" >> gradle/assemble/debug.properties
+          echo "ALIAS_PASS=temp1234" >> gradle/assemble/debug.properties
+
+      # 4.生成临时的 debug keystore
+      - name: generate temporary debug keystore
+        run: |
+          keytool -genkey -v -keystore gradle/assemble/dandanplay.jks \
+            -alias temp -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass temp1234 -keypass temp1234 \
+            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, ST=Temp, C=CN"
+
+      # 5.配置构建类型为 debug
       - name: setup build type
         run: echo "BUILD_TYPE=debug" >> $GITHUB_ENV
 
-      # 4.构建调试 APK（不需要签名）
+      # 6.构建调试 APK
       - name: assemble debug apk
         run: chmod +x gradlew && ./gradlew clean assembleDebug --stacktrace
 
-      # 5.配置构建版本
+      # 7.配置构建版本
       - name: setup build version
         run: |
           apk_version=`egrep -o "[0-9].[0-9].[0-9]" buildSrc/src/main/java/Versions.kt`
           echo "BUILD_VERSION=$apk_version" >> $GITHUB_ENV
 
-      # 6.移动文件到根目录
+      # 8.移动文件到根目录
       - name: move file
         run: |
           # 查找所有生成的 APK 文件
           find app/build/outputs/apk/debug -name "*.apk" -exec mv {} . \;
 
-      # 7.上传 APK 作为 Artifacts
+      # 9.上传 APK 作为 Artifacts
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
